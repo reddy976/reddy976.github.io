@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hari Reddy | Video Editor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:#000;
+  color:white;
+  font-family:'Poppins',sans-serif;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  padding:20px 60px;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(8px);
+  z-index:1000;
+}
+
+nav a{
+  margin-left:20px;
+  text-decoration:none;
+  color:#888;
+}
+nav a:hover{color:white;}
+
+/* HERO */
+.hero-img-section{
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-img{
+  width:110%;
+  height:110%;
+  object-fit:cover;
+  position:absolute;
+  top:-5%;
+  left:-5%;
+  transition:transform 0.1s linear;
+}
+
+.hero-name{
+  position:absolute;
+  bottom:60px;
+  width:100%;
+  text-align:center;
+}
+
+.hero-name h1{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 66px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+.hero-name .sub{
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #bbb;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* SECOND PAGE */
+.hero-text-section{
+  height:100vh;
+  display:flex;
+  align-items:center;        /* vertical center */
+  justify-content:center;
+  padding:0 80px;
+
+  padding-top:80px;          /* 👈 pushes content down (navbar fix) */
+  box-sizing:border-box;
+}.hero-text-section h1{
+  font-size:66px;
+  max-width:750px;
+}
+
+.hero-text-section span{
+  color:#ff3b3b;
+}
+
+/* SECTION */
+.section{
+  padding:90px 80px;
+}
+
+.section h2{
+  font-size:78px;
+  margin-bottom:40px;
+}
+
+/* ABOUT */
+.about-text{
+  max-width:700px;
+  line-height:2;
+  font-size:24px;
+  color:#aaa;
+}
+
+/* EDUCATION (FIXED) */
+.edu-card{
+  margin-top:20px;
+  padding:30px;
+  background:#0a0a0a;
+  border:1px solid #222;
+  border-radius:12px;
+  color:#ccc;
+  font-size:20px;
+  line-height:1.9;
+}
+
+/* SKILLS (FIXED PROPERLY) */
+.tools{
+  margin-top:10px;
+}
+
+.tools span{
+  display:inline-block;
+  margin:8px 6px;
+  padding:10px 18px;
+  border:1px solid #222;
+  border-radius:30px;
+  color:#bbb;
+  font-size:20px;
+  transition:0.3s;
+}
+
+.tools span:hover{
+  border-color:#ff3b3b;
+  color:white;
+  box-shadow:0 0 10px rgba(255,59,59,0.35);
+}
+
+.skill-list{
+  margin-top:20px;
+  color:#aaa;
+  line-height:1.9;
+  font-size:20px;
+}
+
+/* PROJECT GRID */
+.project-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  margin-top:30px;
+}
+
+.project-list div{
+  font-size:24px;
+  margin:12px 0;
+  cursor:pointer;
+  color:#777;
+  transition:0.3s;
+}
+
+.project-list div:hover{
+  color:white;
+  transform:translateX(10px);
+}
+
+/* HOVER VIDEO */
+.hover-video{
+  position:fixed;
+  width:320px;
+  height:180px;
+  pointer-events:none;
+  display:none;
+  z-index:999;
+  border-radius:12px;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.3);
+}
+
+.hover-video video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* VIEW */
+.project-view, .video-view{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.project-view img,
+.video-view video{
+  max-width:90%;
+  max-height:90%;
+}
+
+/* CONTACT */
+.contact p{
+  color:#aaa;
+  margin:8px 0;
+}
+
+.contact a{
+  color:white;
+  text-decoration:none;
+}
+
+.contact a:hover{
+  color:#ff3b3b;
+}
+/* FULLSCREEN VIEW FIX */
+.project-view,
+.video-view{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:black;
+  z-index:9999;
+}
+/* HERO IMPROVEMENT */
+.hero-img{
+  width:110%;
+  height:110%;
+  object-fit:cover;
+  position:absolute;
+  top:-5%;
+  left:-5%;
+  transition:transform 0.1s linear, filter 0.5s ease;
+  filter:brightness(0.6) contrast(1.1);
+}
+
+/* DARK GRADIENT OVERLAY */
+.hero-img-section::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:50%;
+  background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+/* HERO TEXT UPGRADE */
+.hero-name h1{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 66px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+.hero-name .sub{
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #bbb;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+/* HERO IMPROVEMENTS */
+
+/* DARKEN IMAGE */
+.hero-img{
+  filter:brightness(0.45) contrast(1.1);
+}
+
+/* MAIN TEXT */
+.hero-name h1{
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 66px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+/* SUB TEXT */
+.hero-name .sub{
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #bbb;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* SUBTLE BLUR DEPTH */
+.hero-name{
+  backdrop-filter:blur(2px);
+}
+/* HERO GRID LAYOUT */
+.hero-text-section{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 80px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  width:100%;
+  max-width:1200px;
+  align-items:center;
+}
+
+/* LEFT IMAGE */
+.hero-left img{
+  width:100%;
+  border-radius:12px;
+  filter:brightness(0.8) contrast(1.1);
+  transition:0.4s;
+}
+
+.hero-left img:hover{
+  transform:scale(1.03);
+}
+
+/* RIGHT TEXT */
+.hero-right h1{
+  font-size:48px;
+  line-height:1.3;
+  text-align:left;
+}
+
+.hero-right span{
+  color:#ff3b3b;
+}
+.hero-grid{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+}
+.hero-text-section{
+  transform:translateY(-20px);
+}
+.hero-grid{
+  transform:translateY(50px);   /* 👈 fine-tune center */
+}
+/* SCROLL FADE EFFECT */
+.fade-up{
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 0.8s ease;
+}
+
+.fade-up.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.contact a{
+  position:relative;
+  display:inline-block;
+  color:#bbb;
+  text-decoration:none;
+  overflow:hidden;
+}
+
+/* both texts stacked */
+.default-text,
+.hover-text{
+  display:block;
+  transition:0.3s;
+}
+
+/* hover text hidden initially */
+.hover-text{
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0;
+  color:#ff3b3b;
+}
+
+/* hover effect */
+.contact a:hover .default-text{
+  transform:translateY(-100%);
+  opacity:0;
+}
+
+.contact a:hover .hover-text{
+  opacity:1;
+  transform:translateY(0);
+}
+/* NAV TEXT SLIDE EFFECT */
+nav a{
+  position:relative;
+  display:inline-block;
+  overflow:hidden;
+  color:#aaa;
+  text-decoration:none;
+}
+
+/* stack text */
+.nav-default,
+.nav-hover{
+  display:block;
+  transition:0.3s ease;
+}
+
+/* hover version */
+.nav-hover{
+  position:absolute;
+  top:100%;
+  left:0;
+  color:#ff3b3b;
+}
+
+/* animation */
+nav a:hover .nav-default{
+  transform:translateY(-100%);
+}
+
+nav a:hover .nav-hover{
+  transform:translateY(-100%);
+}
+/* POSTER HOVER PREVIEW */
+.poster-preview{
+  position:fixed;
+  width:220px;
+  height:300px;
+  pointer-events:none;
+  display:none;
+  z-index:999;
+  border-radius:12px;
+  overflow:hidden;
+  background:#111;
+  border:1px solid #222;
+  pointer-events:none;
+}
+
+.poster-preview img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero-name h1{
+  animation: fadeUpHero 1.2s ease;
+}
+
+.hero-name .sub{
+  animation: fadeUpHero 1.6s ease;
+}
+
+@keyframes fadeUpHero{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+body::after{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  pointer-events:none;
+  opacity:0.05;
+  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+}
+.project-list div{
+  font-size:26px;
+  font-weight:500;
+  letter-spacing:0.5px;
+}
+.section h2{
+  font-size:72px;
+  letter-spacing:1px;
+  font-weight:700;
+}
+.contact a{
+  font-size:18px;
+  letter-spacing:0.5px;
+}
+.tools span{
+  position:relative;
+}
+
+/* percentage popup */
+.tools span::after{
+  content: attr(data-skill);
+  position:absolute;
+  bottom:120%;
+  left:50%;
+  transform:translateX(-50%) scale(0.8);
+  opacity:0;
+
+  background:#111;
+  color:#fff;
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:6px;
+  border:1px solid #333;
+
+  transition:0.2s ease;
+}
+
+/* show on hover */
+.tools span:hover::after{
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+}
+/* ===== BACKGROUND FLOATING LOGOS ===== */
+.bg-logos{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  pointer-events:none;
+  z-index:0; /* stays behind everything */
+}
+
+.bg-logo{
+  position:absolute;
+  width:140px;
+  opacity:10; /* super subtle */
+  filter:blur(3px);
+  animation: floatBg 20s ease-in-out infinite;
+}
+
+/* positions */
+.l1{
+  top:15%;
+  left:10%;
+}
+
+.l2{
+  opacity:15;
+  top:75%;
+  right:8%;
+  transform:rotate 30*;
+}
+
+/* animation */
+@keyframes floatBg{
+  0%{ transform:translateY(0px); }
+  50%{ transform:translateY(-40px); }
+  100%{ transform:translateY(0px); }
+}
+.bg-logo{
+  filter: blur(4px) grayscale(100%);
+  opacity:15;
+}
+.l2{
+  opacity:0.4;
+}
+</style>
+</head>
+
+<body>
+<div class="bg-logos">
+  <img src="ae.png" class="bg-logo l1" alt="">
+  <img src="pr.png" class="bg-logo l2" alt="">
+</div>
+<nav>
+  <div>EDITOR</div>
+  <div>
+    <a href="#about">
+  <span class="nav-default">About</span>
+  <span class="nav-hover">About</span>
+</a>
+    <a href="#education">
+  <span class="nav-default">Education</span>
+  <span class="nav-hover">Education</span>
+</a>
+    <a href="#skills">
+  <span class="nav-default">Skills</span>
+  <span class="nav-hover">Skills</span>
+</a>
+    <a href="#projects">
+  <span class="nav-default">Projects</span>
+  <span class="nav-hover">Projects</span>
+</a>
+    <a href="#contact">
+  <span class="nav-default">Contact</span>
+  <span class="nav-hover">Contact</span>
+</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-img-section">
+  <img src="hero.png" class="hero-img">
+
+  <div class="hero-name">
+    <h1>Hari Reddy</h1>
+    <div class="sub">Video Editor & VFX Artist</div>
+    <div class="sub">Who refuse to settle</div>
+  </div>
+</section>
+
+<!-- SECOND -->
+<section class="hero-text-section fade-up">
+
+  <div class="hero-grid">
+
+    <!-- LEFT IMAGE -->
+    <div class="hero-left">
+      <img src="profile.png" alt="Hari Reddy">
+    </div>
+
+    <!-- RIGHT TEXT -->
+    <div class="hero-right">
+      <h1>
+        I CREATE, CUT, AND <br>
+        SHAPE FOOTAGE <br>
+        INTO STORIES THAT <br>
+        <span>ACTUALLY HIT.</span>
+      </h1>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <h2 class="fade-up">About</h2>
+  <p class="about-text fade-up">
+    Hey there, I'm Reddy.
+
+I'm a passionate Video Editor and VFX artist with a strong interest in creating visually engaging and impactful content. Over time, l've developed skills in editing, storytelling, and adding cinematic effects that bring ideas to life.
+  </p>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section fade-up">
+  <h2 class="fade-up">Education</h2>
+  <div class="edu-card">
+    BSc Animation & VFX <br>
+    Parul University, Vadodara (2023 – Present)
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section fade-up">
+  <h2 class="fade-up">Skills</h2>
+
+  <div class="tools">
+    <span data-skill="90%">After Effects</span>
+    <span data-skill="85%">Premiere Pro</span>
+    <span data-skill="85%">Photoshop</span>
+    <span data-skill="80%">Blender</span>
+    <span data-skill="Basic's">Maya</span>
+  </div>
+
+  <div class="skill-list">
+    Video Editing • Motion Graphics • Color Grading • Poster Design • 3D Design
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section fade-up">
+  <h2 class="fade-up">Projects</h2>
+
+  <div class="project-grid">
+
+    <div>
+      <h3>Posters</h3>
+      <div class="project-list">
+        <div data-img="poster1.jpg" onclick="openProject('poster1.jpg')">Fight Club</div>
+        <div data-img="poster2.jpg" onclick="openProject('poster2.jpg')">Comet</div>
+        <div data-img="poster3.jpg" onclick="openProject('poster3.jpg')">Coke</div>
+        <div data-img="poster4.jpg" onclick="openProject('poster4.jpg')">King Kohli</div>
+        <div data-img="poster5.jpg" onclick="openProject('poster5.jpg')">Sprite</div>
+        <div data-img="poster6.jpg" onclick="openProject('poster6.jpg')">Satoru Gojo</div>
+      </div>
+    </div>
+
+    <div>
+      <h3>Videos</h3>
+      <div class="project-list">
+        <div data-video="video1.mp4">3D Ad Project</div>
+        <div data-video="video2.mp4">Motion Design</div>
+        <div data-video="video3.mp4">Velocity Cut</div>
+        <div data-video="video4.mp4">Beat Sync Rush</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section contact">
+  <h2>Contact</h2>
+  <p>
+  <a href="mailto:nickelreddy976@gmail.com">
+    <span class="default-text">nickelreddy976@gmail.com</span>
+    <span class="hover-text">Email me</span>
+  </a>
+</p>
+
+<p>
+  <a href="tel:+919182008209">
+    <span class="default-text">+91 9182008209</span>
+    <span class="hover-text">Call me</span>
+  </a>
+</p>
+
+<p>
+  <a href="https://www.behance.net/nickelvanga" target="_blank">
+    Behance
+  </a>
+</p>
+</section>
+
+<!-- HOVER VIDEO -->
+<div class="hover-video" id="hoverVideo">
+  <video id="hoverPlayer" muted loop></video>
+</div>
+
+<div class="project-view" id="projectView">
+  <img id="projectImg">
+</div>
+
+<div class="video-view" id="videoView">
+  <video id="mainVideo" controls playsinline></video>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ========= FLAGS ========= */
+  let isPlayingFullscreen = false;
+
+  /* ========= ELEMENTS ========= */
+  const hoverBox = document.getElementById("hoverVideo");
+  const hoverPlayer = document.getElementById("hoverPlayer");
+  const videoView = document.getElementById("videoView");
+  const mainVideo = document.getElementById("mainVideo");
+
+  /* ========= VIDEO SYSTEM ========= */
+  document.querySelectorAll("[data-video]").forEach(item => {
+
+    // HOVER PLAY
+    item.addEventListener("mouseenter", () => {
+      if (!hoverBox || !hoverPlayer) return;
+
+      hoverBox.style.display = "block";
+      hoverPlayer.src = item.getAttribute("data-video");
+      hoverPlayer.play();
+    });
+
+    // HOVER STOP
+    item.addEventListener("mouseleave", () => {
+      if (isPlayingFullscreen || !hoverBox || !hoverPlayer) return;
+
+      hoverBox.style.display = "none";
+      hoverPlayer.pause();
+      hoverPlayer.src = "";
+    });
+
+    // CLICK FULL VIDEO
+    item.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      if (!videoView || !mainVideo) return;
+
+      isPlayingFullscreen = true;
+
+      // STOP HOVER VIDEO
+      if (hoverPlayer) {
+        hoverPlayer.pause();
+        hoverPlayer.currentTime = 0;
+        hoverPlayer.src = "";
+      }
+      if (hoverBox) hoverBox.style.display = "none";
+
+      // PLAY MAIN VIDEO
+      videoView.style.display = "flex";
+      mainVideo.src = item.getAttribute("data-video");
+      mainVideo.play();
+    });
+
+  });
+
+  /* ========= FOLLOW CURSOR ========= */
+  document.addEventListener("mousemove", (e) => {
+    if (hoverBox) {
+      hoverBox.style.left = e.clientX + 20 + "px";
+      hoverBox.style.top = e.clientY + 20 + "px";
+    }
+  });
+
+  /* ========= CLOSE VIDEO ========= */
+  if (videoView) {
+    videoView.onclick = () => {
+      videoView.style.display = "none";
+
+      if (mainVideo) {
+        mainVideo.pause();
+        mainVideo.src = "";
+      }
+
+      isPlayingFullscreen = false;
+    };
+  }
+
+  /* ========= POSTER PREVIEW ========= */
+  const preview = document.getElementById("posterPreview");
+  const previewImg = document.getElementById("previewImg");
+
+  if (preview && previewImg) {
+
+    document.querySelectorAll("[data-img]").forEach(item => {
+
+      item.addEventListener("mouseenter", () => {
+        previewImg.src = item.getAttribute("data-img");
+        preview.style.display = "block";
+      });
+
+      item.addEventListener("mouseleave", () => {
+        preview.style.display = "none";
+      });
+
+      item.addEventListener("mousemove", (e) => {
+        preview.style.left = e.clientX + 20 + "px";
+        preview.style.top = e.clientY + 20 + "px";
+      });
+
+    });
+
+const faders = document.querySelectorAll(".fade-up");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+}, { threshold: 0.2 });
+
+faders.forEach(el => observer.observe(el));
+  
+
+  }
+
+const projectView = document.getElementById("projectView");
+
+if(projectView){
+  projectView.onclick = () => {
+    projectView.style.display = "none";
+  };
+}
+
+/* ========= HERO PARALLAX ========= */
+const heroImg = document.querySelector(".hero-img");
+
+document.addEventListener("mousemove", (e) => {
+  if (!heroImg) return;
+
+  const x = (e.clientX / window.innerWidth - 0.5) * 30;
+  const y = (e.clientY / window.innerHeight - 0.5) * 30;
+
+  heroImg.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+});
+
+});
+
+function openProject(imgSrc){
+  const view = document.getElementById("projectView");
+  const img = document.getElementById("projectImg");
+
+  if(!view || !img) return;
+
+  view.style.display = "flex";
+  img.src = imgSrc;
+}
+
+</script>
+
+<div class="poster-preview" id="posterPreview">
+  <img id="previewImg">
+</div>
+
+</body>
+</html>
