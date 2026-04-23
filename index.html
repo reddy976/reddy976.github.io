@@ -577,35 +577,6 @@ body::after{
 .l2{
   opacity:0.4;
 }
-  /* HERO SLIDE EFFECT (LIKE CONTACT) */
-.slide-text{
-  position:relative;
-  display:inline-block;
-  overflow:hidden;
-}
-
-.slide-text span{
-  display:block;
-  transition:0.3s ease;
-}
-
-/* red text */
-.slide-text .hover-text{
-  position:absolute;
-  top:0;
-  left:0;
-  transform:translateY(100%);
-  color:#ff3b3b;
-}
-
-/* hover animation */
-.slide-text:hover .default-text{
-  transform:translateY(-100%);
-}
-
-.slide-text:hover .hover-text{
-  transform:translateY(0);
-}
 }
   .hero-name h1{
   opacity:1 !important;
@@ -622,6 +593,21 @@ body::after{
 
 .hero-sub p{
   margin:4px 0;
+}
+  .hero-name h1{
+  transition:0.3s ease;
+}
+
+.hero-name h1:hover{
+  color:#ff3b3b;
+}
+
+.hero-sub p{
+  transition:0.3s ease;
+}
+
+.hero-sub p:hover{
+  color:#ff3b3b;
 }
 </style>
 </head>
@@ -663,17 +649,12 @@ body::after{
 
   <div class="hero-name">
 
-    <h1 class="slide-text">
-      <span class="default-text">Hari Reddy</span>
-      <span class="hover-text">Hari Reddy</span>
-    </h1>
+   <h1>Hari Reddy</h1>
 
     <div class="hero-sub">
 
-      <p class="slide-text">
-        <span class="default-text">Video Editor & VFX Artist</span>
-        <span class="hover-text">Video Editor & VFX Artist</span>
-      </p>
+      <p>Video Editor & VFX Artist</p>
+<p>Who refuses to settle</p>
 
       <p class="slide-text">
         <span class="default-text">Who refuses to settle</span>
