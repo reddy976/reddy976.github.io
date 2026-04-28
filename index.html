@@ -90,7 +90,7 @@ nav a:hover{color:white;}
   padding-top:80px;          /* 👈 pushes content down (navbar fix) */
   box-sizing:border-box;
 }.hero-text-section h1{
-  font-size:66px;
+  font-size:clamp(32px, 6vw, 66px);
   max-width:750px;
 }
 
@@ -621,6 +621,92 @@ body::after{
 .hero-name h1:hover,
 .hero-sub p:hover{
   color:#ff3b3b !important;
+}
+  /* ========================= */
+/* 📱 MOBILE RESPONSIVE FIX */
+/* ========================= */
+
+@media (max-width: 768px){
+
+  /* NAV */
+  nav{
+    padding:15px 20px;
+    font-size:14px;
+  }
+
+  nav div:last-child{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  /* HERO TEXT */
+  .hero-name h1{
+    font-size:36px;
+  }
+
+  .hero-sub p{
+    font-size:12px;
+  }
+
+  /* SECOND SECTION */
+  .hero-grid{
+    grid-template-columns:1fr;
+    gap:30px;
+  }
+
+  .hero-right h1{
+    font-size:28px;
+    text-align:center;
+  }
+
+  /* GENERAL SECTIONS */
+  .section{
+    padding:60px 20px;
+  }
+
+  .section h2{
+    font-size:36px;
+  }
+
+  /* ABOUT */
+  .about-text{
+    font-size:16px;
+    line-height:1.6;
+  }
+
+  /* EDUCATION */
+  .edu-card{
+    font-size:16px;
+    padding:20px;
+  }
+
+  /* SKILLS */
+  .tools span{
+    font-size:14px;
+    padding:8px 14px;
+  }
+
+  .skill-list{
+    font-size:16px;
+  }
+
+  /* PROJECT GRID */
+  .project-grid{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+
+  .project-list div{
+    font-size:18px;
+  }
+
+  /* DISABLE HOVER STUFF */
+  .hover-video,
+  .poster-preview{
+    display:none !important;
+  }
+
 }
 </style>
 </head>
